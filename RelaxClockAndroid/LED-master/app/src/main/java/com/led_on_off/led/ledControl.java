@@ -1,5 +1,6 @@
 package com.led_on_off.led;
 
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -69,6 +70,9 @@ public class ledControl extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 disableSleepFunc();
+                msg("Failure to sleep will result in death.");
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.healthline.com/health/sleep-deprivation/effects-on-body#Causes-of-sleep-deprivation"));
+                startActivity(browserIntent);
             }
         });
         setTime.setOnEditorActionListener(new TextView.OnEditorActionListener() {
