@@ -47,7 +47,6 @@ int *noteDurations = durations1;
 
 
 // Declare alarm variables
-
 time_t sleepAlarm = 0;
 time_t wakeUpAlarm = 0;
 
@@ -244,6 +243,12 @@ void loop() {
     else {
       adjustAlarm(86400);
     }
+  }
+  // Check if it is past wake up alarm time
+  else if (wakeUpAlarm != 0 && wakeUpAlarm < now()) {
+    digitalWrite(LED, HIGH);
+    curNote = 0;
+    playMusic = 0;
   }
   // If not yet time for alarm, don't do anything
   else {
