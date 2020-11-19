@@ -1,6 +1,7 @@
 package com.led_on_off.led;
 
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +39,36 @@ public class ledControl extends ActionBarActivity {
     private boolean isBtConnected = false;
     //SPP UUID. Look for it
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    final int MY_REQUEST_CODE = 42;
+
+    // Create the Handler object (on the main thread by default)
+    Handler handler = new Handler();
+    // Define the code block to be executed
+    private Runnable runnableCode = new Runnable() {
+        @Override
+        public void run() {
+            // Do something here on the main thread
+            Log.d("Handlers", "Called on main thread");
+            try {
+                String btStatus = btSocket.getInputStream().toString();
+                if(btStatus.equals("Wake")){
+                    Intent intent = new Intent(ledControl.this,AlarmActivity.class);
+                    intent.putExtra("CODE",1);
+                    startActivityForResult(intent,MY_REQUEST_CODE);
+
+                }
+                if(btStatus.equals("Sleep")){
+                    Intent intent = new Intent(ledControl.this,AlarmActivity.class);
+                    intent.putExtra("CODE",0);
+                    startActivityForResult(intent,MY_REQUEST_CODE);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            handler.postDelayed(this, 1000);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -114,6 +145,45 @@ public class ledControl extends ActionBarActivity {
         });
 
 
+    }
+    @Override
+
+    //When the second activity finishes get the information from the second activity.
+    protected void onActivityResult(int requestCode, final int resultCode, Intent intent) {
+        int decision = intent.getIntExtra("Decision",-1);
+        if(decision ==0){
+            setSnooze();
+        }
+        if(decision==1){
+            setStop();
+        }
+
+    }
+    private void setSnooze(){
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("5".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+    }
+    private void setStop(){
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("6".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
     }
     private void setWakeFunc(String time){
         if (btSocket!=null)
@@ -215,35 +285,14 @@ public class ledControl extends ActionBarActivity {
         }
     }
 
-//    private void turnOnLed()
-//    {
-//        if (btSocket!=null)
-//        {
-//            try
-//            {
-//                btSocket.getOutputStream().write("1".toString().getBytes());
-//            }
-//            catch (IOException e)
-//            {
-//                msg("Error");
-//            }
-//        }
-//    }
+
 
     // fast way to call Toast
     private void msg(String s)
     {
         Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
     }
-    /*
-    public  void about(View v)
-    {
-        if(v.getId() == R.id.abt)
-        {
-            Intent i = new Intent(this, AboutActivity.class);
-            startActivity(i);
-        }
-    }*/
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

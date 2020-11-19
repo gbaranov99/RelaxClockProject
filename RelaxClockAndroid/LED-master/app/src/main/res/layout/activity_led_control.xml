@@ -103,7 +103,7 @@
         android:layout_marginTop="500dp"
         android:id="@+id/dis_btn"
         android:textSize="20sp"
-        tools:text="DISCONNECT" />
+        android:text="DISCONNECT" />-
 
 
 </RelativeLayout>
