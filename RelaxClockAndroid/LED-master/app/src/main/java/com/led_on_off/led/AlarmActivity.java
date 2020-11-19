@@ -26,13 +26,13 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class AlarmActivity extends ActionBarActivity{
-    int decision;
+    int decision, resultCode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alarm_activity);
         Intent myIntent = getIntent();
-        int resultCode = myIntent.getIntExtra("CODE",-1);
+        resultCode = myIntent.getIntExtra("CODE",-1);
         TextView title = (TextView)findViewById(R.id.title);
         if(resultCode ==0){
             title.setText("Sleep ALarm Options");
@@ -53,6 +53,7 @@ public class AlarmActivity extends ActionBarActivity{
             @Override
             public void onClick(View view) {
                 decision = 1;
+
                 goToMain(decision);
             }
         });
@@ -60,6 +61,13 @@ public class AlarmActivity extends ActionBarActivity{
     void goToMain(int code){
         Intent i = new Intent(this, ledControl.class);
         i.putExtra("Decision",code);
+        i.putExtra("ResultCode", resultCode);
+        setResult(RESULT_OK, i);
         finish();
+    }
+    // fast way to call Toast
+    private void msg(String s)
+    {
+        Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
     }
 }

@@ -48,20 +48,27 @@ public class ledControl extends ActionBarActivity {
         @Override
         public void run() {
             // Do something here on the main thread
-            Log.d("Handlers", "Called on main thread");
+//            Log.d("Handlers", "Called on main thread");
             try {
-                String btStatus = btSocket.getInputStream().toString();
-                if(btStatus.equals("Wake")){
-                    Intent intent = new Intent(ledControl.this,AlarmActivity.class);
-                    intent.putExtra("CODE",1);
-                    startActivityForResult(intent,MY_REQUEST_CODE);
+//                String btStatus = .read;
+                String btStatus = "-1";
+                int actualStatus = -1;
+                int byteCount = btSocket.getInputStream().available();
 
+                if(byteCount > 0) {
+                    byte[] rawBytes = new byte[byteCount];
+                    btSocket.getInputStream().read(rawBytes);
+                    btStatus = new String(rawBytes);
                 }
-                if(btStatus.equals("Sleep")){
-                    Intent intent = new Intent(ledControl.this,AlarmActivity.class);
-                    intent.putExtra("CODE",0);
-                    startActivityForResult(intent,MY_REQUEST_CODE);
-                }
+                btStatus = btStatus.replace("\n", "").replace("\r", "");
+
+
+                actualStatus = Integer.parseInt(btStatus);
+                Log.d("Handlers", btStatus);
+//                if (btStatus.equals("Sleep")) {
+//                    Log.d("Handlers", "Gud");
+//                }
+                switchPage(actualStatus);
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -69,6 +76,25 @@ public class ledControl extends ActionBarActivity {
             handler.postDelayed(this, 1000);
         }
     };
+
+    void switchPage(int actualStatus) {
+        Log.d("Handlers", "please save us");
+        if(actualStatus == 0){
+            Log.d("Handlers", "gud");
+            Log.d("Handlers", "Called in wake");
+            Intent intent = new Intent(ledControl.this,AlarmActivity.class);
+            intent.putExtra("CODE",1);
+            startActivityForResult(intent,MY_REQUEST_CODE);
+
+        }
+        if(actualStatus == 1){
+            Log.d("Handlers", "bad");
+            Log.d("Handlers", "Called in sleep");
+            Intent intent = new Intent(ledControl.this,AlarmActivity.class);
+            intent.putExtra("CODE",0);
+            startActivityForResult(intent,MY_REQUEST_CODE);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -81,12 +107,13 @@ public class ledControl extends ActionBarActivity {
         //view of the ledControl
         setContentView(R.layout.activity_led_control);
 
+        handler.post(runnableCode);
         //call the widgets
 
         Discnt = (Button)findViewById(R.id.dis_btn);
         setTime = (EditText)findViewById(R.id.setTime);
         setWake = (EditText)findViewById(R.id.setWakeAlarm);
-        setSleep = (EditText)findViewById(R.id.setSleepAlarm);
+        setSleep  = (EditText)findViewById(R.id.setSleepAlarm);
         disableWake = (Button)findViewById(R.id.disableWake);
         disableSleep = (Button)findViewById(R.id.disableSleep);
 
@@ -135,6 +162,7 @@ public class ledControl extends ActionBarActivity {
         new ConnectBT().execute(); //Call the class to connect
 
 
+
         Discnt.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -151,11 +179,17 @@ public class ledControl extends ActionBarActivity {
     //When the second activity finishes get the information from the second activity.
     protected void onActivityResult(int requestCode, final int resultCode, Intent intent) {
         int decision = intent.getIntExtra("Decision",-1);
+        int resultCode1 = intent.getIntExtra("ResultCode", -1);
         if(decision ==0){
             setSnooze();
         }
         if(decision==1){
             setStop();
+            if (resultCode1 == 0) {
+                msg("Failure to sleep will result in death.");
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.healthline.com/health/sleep-deprivation/effects-on-body#Causes-of-sleep-deprivation"));
+                startActivity(browserIntent);
+            }
         }
 
     }
