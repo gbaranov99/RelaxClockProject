@@ -35,7 +35,7 @@ public class AlarmActivity extends ActionBarActivity{
         resultCode = myIntent.getIntExtra("CODE",-1);
         TextView title = (TextView)findViewById(R.id.title);
         if(resultCode ==0){
-            title.setText("Sleep ALarm Options");
+            title.setText("Sleep Alarm Options");
         }
         if(resultCode ==1){
             title.setText("Wake Alarm Options");
