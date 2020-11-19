@@ -7,73 +7,98 @@
     tools:context="com.led_on_off.led.ledControl"
     android:background="#212121">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="LED Controller "
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
-        android:fontFamily="sans-serif-smallcaps"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:textColor="#f44336"
-        android:textSize="23dp" />
-
 
     <Button
-        android:id="@+id/on_btn"
-        android:layout_width="170dp"
-        android:layout_height="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="195dp"
-        android:fadingEdge="none"
-        android:textColor="#212121"
-        android:textSize="30sp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:background="@drawable/rounded_button"
-        tools:text="ON"
-        tools:typeface="monospace" />
-
-    <Button
-        android:layout_width="170dp"
-        android:layout_height="60dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
-        android:textColor="#212121"
-        android:fadingEdge="none"
-        android:id="@+id/off_btn"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textSize="30sp"
-        android:background="@drawable/rounded_button"
-        tools:text="OFF"
-        tools:typeface="monospace" />
-
-    <Button
+        android:id="@+id/dis_btn"
         android:layout_width="150dp"
         android:layout_height="40dp"
-        android:layout_marginTop="500dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:fadingEdge="none"
-        android:textColor="#212121"
-        android:id="@+id/dis_btn"
-        android:textSize="20sp"
+        android:layout_marginTop="650dp"
         android:background="@drawable/rounded_button"
+        android:fadingEdge="none"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textColor="#212121"
+        android:textSize="20sp"
         tools:text="DISCONNECT"
         tools:typeface="monospace" />
 
-    <Button
-        android:id="@+id/abt_btn"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
-        android:textColor="#212121"
-        android:fontFamily="sans-serif-smallcaps"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignTop="@+id/dis_btn"
-        android:textSize="20sp"
-        android:background="@drawable/rounded_button"
-        tools:text="ABOUT"
-        tools:typeface="monospace" />
+
+        android:layout_marginTop="-659dp"
+        android:text="Welcome to Relax Clock!"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/dis_btn"
+        android:layout_marginTop="-613dp"
+        android:text="Set Time "
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/setTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/dis_btn"
+        android:layout_marginTop="-586dp"
+
+        android:ems="10"
+        android:inputType="time" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignTop="@+id/dis_btn"
+        android:layout_marginTop="-528dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set WakeUpAlarm"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/setWakeAlarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="time" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Sleep Alarm"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/setSleepAlarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="time" />
+        </LinearLayout>
+    </LinearLayout>
 
 
 </RelativeLayout>

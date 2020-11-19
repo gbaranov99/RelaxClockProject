@@ -2,14 +2,18 @@ package com.led_on_off.led;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -24,6 +28,7 @@ public class ledControl extends ActionBarActivity {
 
    // Button btnOn, btnOff, btnDis;
     Button On, Off, Discnt, Abt;
+    EditText setTime, setWake,setSleep;
     String address = null;
     private ProgressDialog progress;
     BluetoothAdapter myBluetooth = null;
@@ -44,10 +49,44 @@ public class ledControl extends ActionBarActivity {
         setContentView(R.layout.activity_led_control);
 
         //call the widgets
-        On = (Button)findViewById(R.id.on_btn);
-        Off = (Button)findViewById(R.id.off_btn);
+
         Discnt = (Button)findViewById(R.id.dis_btn);
-        Abt = (Button)findViewById(R.id.abt_btn);
+        setTime = (EditText)findViewById(R.id.setTime);
+        setWake = (EditText)findViewById(R.id.setWakeAlarm);
+        setSleep = (EditText)findViewById(R.id.setSleepAlarm);
+        setTime.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_DONE){
+                    String number = setTime.getText().toString();
+                    setTimeFunc(number);
+
+                }
+                return false;
+            }
+        });
+        setWake.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_DONE){
+                    String number = setWake.getText().toString();
+                    setWakeFunc(number);
+
+                }
+                return false;
+            }
+        });
+        setSleep.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if(i == EditorInfo.IME_ACTION_DONE){
+                    String number = setSleep.getText().toString();
+                    setSleepFunc(number);
+
+                }
+                return false;
+            }
+        });
 
         new ConnectBT().execute(); //Call the class to connect
 
@@ -79,6 +118,48 @@ public class ledControl extends ActionBarActivity {
         });
 
 
+    }
+    private void setWakeFunc(String time){
+        if (btSocket!=null)
+        {
+            try
+            {
+                String output ="2: "+time;
+                btSocket.getOutputStream().write(output.getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+    }
+    private void setSleepFunc(String time){
+        if (btSocket!=null)
+        {
+            try
+            {
+                String output ="1: "+time;
+                btSocket.getOutputStream().write(output.getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+    }
+    private void setTimeFunc(String time){
+        if (btSocket!=null)
+        {
+            try
+            {
+                String output ="0: "+time;
+                btSocket.getOutputStream().write(output.getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
     }
 
     private void Disconnect()
@@ -131,7 +212,7 @@ public class ledControl extends ActionBarActivity {
     {
         Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
     }
-
+    /*
     public  void about(View v)
     {
         if(v.getId() == R.id.abt)
@@ -139,8 +220,7 @@ public class ledControl extends ActionBarActivity {
             Intent i = new Intent(this, AboutActivity.class);
             startActivity(i);
         }
-    }
-
+    }*/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
