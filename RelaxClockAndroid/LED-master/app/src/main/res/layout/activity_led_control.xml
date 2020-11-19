@@ -7,36 +7,21 @@
     tools:context="com.led_on_off.led.ledControl"
     android:background="#212121">
 
-
-    <Button
-        android:id="@+id/dis_btn"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="650dp"
-        android:background="@drawable/rounded_button"
-        android:fadingEdge="none"
-        android:fontFamily="sans-serif-smallcaps"
-        android:textColor="#212121"
-        android:textSize="20sp"
-        tools:text="DISCONNECT"
-        tools:typeface="monospace" />
-
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/dis_btn"
-
-        android:layout_marginTop="-659dp"
+        android:layout_marginTop="-500dp"
         android:text="Welcome to Relax Clock!"
-        android:textSize="30sp" />
+        android:textSize="25sp" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/dis_btn"
-        android:layout_marginTop="-613dp"
+        android:layout_marginTop="-450dp"
         android:text="Set Time "
         android:textSize="24sp" />
 
@@ -45,8 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/dis_btn"
-        android:layout_marginTop="-586dp"
-
+        android:layout_marginTop="-420dp"
         android:ems="10"
         android:inputType="time" />
 
@@ -54,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignTop="@+id/dis_btn"
-        android:layout_marginTop="-528dp"
+        android:layout_marginTop="-370dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -99,6 +83,48 @@
                 android:inputType="time" />
         </LinearLayout>
     </LinearLayout>
+
+    <!--    <Button-->
+    <!--        android:id="@+id/on_btn"-->
+    <!--        android:layout_width="170dp"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:layout_alignParentTop="true"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginTop="195dp"-->
+    <!--        android:background="@color/accent_material_light"-->
+    <!--        android:fadingEdge="none"-->
+    <!--        android:fontFamily="sans-serif-smallcaps"-->
+    <!--        android:textColor="#212121"-->
+    <!--        android:textSize="30sp"-->
+    <!--        tools:text="ON"-->
+    <!--        tools:typeface="monospace" />-->
+
+    <!--    <Button-->
+    <!--        android:layout_width="170dp"-->
+    <!--        android:layout_height="60dp"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginTop="300dp"-->
+    <!--        android:textColor="#212121"-->
+    <!--        android:fadingEdge="none"-->
+    <!--        android:id="@+id/off_btn"-->
+    <!--        android:fontFamily="sans-serif-smallcaps"-->
+    <!--        android:textSize="30sp"-->
+    <!--        android:background="@drawable/rounded_button"-->
+    <!--        tools:text="OFF"-->
+    <!--        tools:typeface="monospace" />-->
+
+    <Button
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="500dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:fadingEdge="none"
+        android:textColor="#212121"
+        android:id="@+id/dis_btn"
+        android:textSize="20sp"
+        android:background="@drawable/rounded_button"
+        tools:text="DISCONNECT"
+        tools:typeface="monospace" />
 
 
 </RelativeLayout>

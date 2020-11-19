@@ -2,6 +2,7 @@ package com.led_on_off.led;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +27,7 @@ import java.util.UUID;
 
 public class ledControl extends ActionBarActivity {
 
-   // Button btnOn, btnOff, btnDis;
+    // Button btnOn, btnOff, btnDis;
     Button On, Off, Discnt, Abt;
     EditText setTime, setWake,setSleep;
     String address = null;
@@ -57,33 +58,25 @@ public class ledControl extends ActionBarActivity {
         setTime.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if(i == EditorInfo.IME_ACTION_DONE){
-                    String number = setTime.getText().toString();
-                    setTimeFunc(number);
-
-                }
+                String number = setTime.getText().toString();
+                setTimeFunc(number);
+//                Log.i("testestasdf", number);
                 return false;
             }
         });
         setWake.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if(i == EditorInfo.IME_ACTION_DONE){
-                    String number = setWake.getText().toString();
-                    setWakeFunc(number);
-
-                }
+                String number = setWake.getText().toString();
+                setWakeFunc(number);
                 return false;
             }
         });
         setSleep.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if(i == EditorInfo.IME_ACTION_DONE){
-                    String number = setSleep.getText().toString();
-                    setSleepFunc(number);
-
-                }
+                String number = setSleep.getText().toString();
+                setSleepFunc(number);
                 return false;
             }
         });
@@ -91,22 +84,22 @@ public class ledControl extends ActionBarActivity {
         new ConnectBT().execute(); //Call the class to connect
 
         //commands to be sent to bluetooth
-        On.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                turnOnLed();      //method to turn on
-            }
-        });
-
-        Off.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                turnOffLed();   //method to turn off
-            }
-        });
+//        On.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                turnOnLed();      //method to turn on
+//            }
+//        });
+//
+//        Off.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                turnOffLed();   //method to turn off
+//            }
+//        });
 
         Discnt.setOnClickListener(new View.OnClickListener()
         {
@@ -138,7 +131,7 @@ public class ledControl extends ActionBarActivity {
         {
             try
             {
-                String output ="1: "+time;
+                String output ="1: "+ time;
                 btSocket.getOutputStream().write(output.getBytes());
             }
             catch (IOException e)
@@ -152,8 +145,9 @@ public class ledControl extends ActionBarActivity {
         {
             try
             {
-                String output ="0: "+time;
-                btSocket.getOutputStream().write(output.getBytes());
+                String output ="0: "+ time;
+                Log.i("kill me bb", output);
+                btSocket.getOutputStream().write(output.toString().getBytes());
             }
             catch (IOException e)
             {
@@ -192,20 +186,20 @@ public class ledControl extends ActionBarActivity {
         }
     }
 
-    private void turnOnLed()
-    {
-        if (btSocket!=null)
-        {
-            try
-            {
-                btSocket.getOutputStream().write("1".toString().getBytes());
-            }
-            catch (IOException e)
-            {
-                msg("Error");
-            }
-        }
-    }
+//    private void turnOnLed()
+//    {
+//        if (btSocket!=null)
+//        {
+//            try
+//            {
+//                btSocket.getOutputStream().write("1".toString().getBytes());
+//            }
+//            catch (IOException e)
+//            {
+//                msg("Error");
+//            }
+//        }
+//    }
 
     // fast way to call Toast
     private void msg(String s)
@@ -262,11 +256,11 @@ public class ledControl extends ActionBarActivity {
             {
                 if (btSocket == null || !isBtConnected)
                 {
-                 myBluetooth = BluetoothAdapter.getDefaultAdapter();//get the mobile bluetooth device
-                 BluetoothDevice dispositivo = myBluetooth.getRemoteDevice(address);//connects to the device's address and checks if it's available
-                 btSocket = dispositivo.createInsecureRfcommSocketToServiceRecord(myUUID);//create a RFCOMM (SPP) connection
-                 BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
-                 btSocket.connect();//start connection
+                    myBluetooth = BluetoothAdapter.getDefaultAdapter();//get the mobile bluetooth device
+                    BluetoothDevice dispositivo = myBluetooth.getRemoteDevice(address);//connects to the device's address and checks if it's available
+                    btSocket = dispositivo.createInsecureRfcommSocketToServiceRecord(myUUID);//create a RFCOMM (SPP) connection
+                    BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
+                    btSocket.connect();//start connection
                 }
             }
             catch (IOException e)

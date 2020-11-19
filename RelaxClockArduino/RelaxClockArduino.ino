@@ -47,7 +47,6 @@ int *noteDurations = durations1;
 
 
 // Declare alarm variables
-
 time_t sleepAlarm = 0;
 time_t wakeUpAlarm = 0;
 
@@ -76,6 +75,8 @@ void readBluetooth() {
   //
   // Example: "0: 10:20:30" sets Arduino's time to 10:20 AM, 30 seconds
   if (readData) {
+
+    Serial.println(Data);
     
     // Convert characters to integers, only if character is an ASCII number
     for (int i = 0; i < 11; i ++) {
@@ -198,7 +199,8 @@ void setup() {
   pinMode(lightSens, INPUT);
   pinMode(pressSens, INPUT);
   pinMode(buzzer, OUTPUT);
-  //attachInterrupt(digitalPinToInterrupt(3), bluetoothReceived, RISING);
+
+  analogWrite(6, 90); // Hardcode brightness of LCD, as potentiometer component was inconsistent
 
   setTime(0,0,0,1,1,2020);
   
@@ -219,10 +221,10 @@ void loop() {
   
   lightData = analogRead(lightSens);
   pressData = analogRead(pressSens);
-  Serial.print("Light Sensor reading: ");
-  Serial.println(lightData);
-  Serial.print("Pressure Sensor reading: ");
-  Serial.println(pressData);
+//  Serial.print("Light Sensor reading: ");
+//  Serial.println(lightData);
+//  Serial.print("Pressure Sensor reading: ");
+//  Serial.println(pressData);
 
 //  Serial.print("time: ");
 //  Serial.println(now());
@@ -243,6 +245,12 @@ void loop() {
     else {
       adjustAlarm(86400);
     }
+  }
+  // Check if it is past wake up alarm time
+  else if (wakeUpAlarm != 0 && wakeUpAlarm < now()) {
+    digitalWrite(LED, HIGH);
+    curNote = 0;
+    playMusic = 0;
   }
   // If not yet time for alarm, don't do anything
   else {
