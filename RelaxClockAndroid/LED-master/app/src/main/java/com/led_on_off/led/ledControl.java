@@ -28,7 +28,7 @@ import java.util.UUID;
 public class ledControl extends ActionBarActivity {
 
     // Button btnOn, btnOff, btnDis;
-    Button On, Off, Discnt, Abt;
+    Button disableWake, disableSleep, Discnt;
     EditText setTime, setWake,setSleep;
     String address = null;
     private ProgressDialog progress;
@@ -55,6 +55,22 @@ public class ledControl extends ActionBarActivity {
         setTime = (EditText)findViewById(R.id.setTime);
         setWake = (EditText)findViewById(R.id.setWakeAlarm);
         setSleep = (EditText)findViewById(R.id.setSleepAlarm);
+        disableWake = (Button)findViewById(R.id.disableWake);
+        disableSleep = (Button)findViewById(R.id.disableSleep);
+
+        disableWake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                disableWakeFunc();
+            }
+        });
+
+        disableSleep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                disableSleepFunc();
+            }
+        });
         setTime.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -83,23 +99,6 @@ public class ledControl extends ActionBarActivity {
 
         new ConnectBT().execute(); //Call the class to connect
 
-        //commands to be sent to bluetooth
-//        On.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                turnOnLed();      //method to turn on
-//            }
-//        });
-//
-//        Off.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                turnOffLed();   //method to turn off
-//            }
-//        });
 
         Discnt.setOnClickListener(new View.OnClickListener()
         {
@@ -133,6 +132,32 @@ public class ledControl extends ActionBarActivity {
             {
                 String output ="1: "+ time;
                 btSocket.getOutputStream().write(output.getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+    }
+    private void disableWakeFunc(){
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("4".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+    }
+    private void disableSleepFunc(){
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("3".toString().getBytes());
             }
             catch (IOException e)
             {

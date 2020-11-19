@@ -60,6 +60,12 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="time" />
+
+            <Button
+                android:id="@+id/disableWake"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Disable WakeUpAlarm" />
         </LinearLayout>
 
         <LinearLayout
@@ -81,50 +87,23 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="time" />
+
+            <Button
+                android:id="@+id/disableSleep"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Disable SleepAlarm" />
         </LinearLayout>
     </LinearLayout>
 
-    <!--    <Button-->
-    <!--        android:id="@+id/on_btn"-->
-    <!--        android:layout_width="170dp"-->
-    <!--        android:layout_height="60dp"-->
-    <!--        android:layout_alignParentTop="true"-->
-    <!--        android:layout_centerHorizontal="true"-->
-    <!--        android:layout_marginTop="195dp"-->
-    <!--        android:background="@color/accent_material_light"-->
-    <!--        android:fadingEdge="none"-->
-    <!--        android:fontFamily="sans-serif-smallcaps"-->
-    <!--        android:textColor="#212121"-->
-    <!--        android:textSize="30sp"-->
-    <!--        tools:text="ON"-->
-    <!--        tools:typeface="monospace" />-->
-
-    <!--    <Button-->
-    <!--        android:layout_width="170dp"-->
-    <!--        android:layout_height="60dp"-->
-    <!--        android:layout_centerHorizontal="true"-->
-    <!--        android:layout_marginTop="300dp"-->
-    <!--        android:textColor="#212121"-->
-    <!--        android:fadingEdge="none"-->
-    <!--        android:id="@+id/off_btn"-->
-    <!--        android:fontFamily="sans-serif-smallcaps"-->
-    <!--        android:textSize="30sp"-->
-    <!--        android:background="@drawable/rounded_button"-->
-    <!--        tools:text="OFF"-->
-    <!--        tools:typeface="monospace" />-->
 
     <Button
         android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_marginTop="500dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:fadingEdge="none"
-        android:textColor="#212121"
         android:id="@+id/dis_btn"
         android:textSize="20sp"
-        android:background="@drawable/rounded_button"
-        tools:text="DISCONNECT"
-        tools:typeface="monospace" />
+        tools:text="DISCONNECT" />
 
 
 </RelativeLayout>
