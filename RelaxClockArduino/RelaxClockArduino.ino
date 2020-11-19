@@ -198,7 +198,8 @@ void setup() {
   pinMode(lightSens, INPUT);
   pinMode(pressSens, INPUT);
   pinMode(buzzer, OUTPUT);
-  //attachInterrupt(digitalPinToInterrupt(3), bluetoothReceived, RISING);
+
+  analogWrite(6, 90); // Hardcode brightness of LCD, as potentiometer component was inconsistent
 
   setTime(0,0,0,1,1,2020);
   
