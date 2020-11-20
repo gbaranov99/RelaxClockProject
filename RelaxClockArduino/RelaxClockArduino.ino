@@ -49,8 +49,6 @@ int *noteDurations = durations1;
 // Declare alarm variables
 time_t sleepAlarm = 0;
 time_t wakeUpAlarm = 0;
-int sleepPlaying = 0;
-int wakeUpPlaying = 0;
 
 int prevSecond = 0; // Variable to allow updates of LCD once a second, despite more frequent refreshing
 
@@ -130,24 +128,24 @@ void readBluetooth() {
       wakeUpAlarm = 0;
     }
     
-    // Snooze alarm 5 minutes
+    // Snooze sleep alarm 5 minutes
     else if (Data[0] == 5) {
-      if (sleepPlaying) {
-        sleepAlarm = adjustAlarm(300, sleepAlarm);
-      }
-      else {
-        wakeUpAlarm = adjustAlarm(300, wakeUpAlarm);
-      }
+      sleepAlarm = adjustAlarm(300, sleepAlarm);
     }
     
-    // Stop sounding alarm, automatically sets to same time next day
+    // Stop sounding sleep alarm, automatically sets to same time next day
     else if (Data[0] == 6) {
-      if (sleepPlaying) {
-        sleepAlarm = adjustAlarm(86400, sleepAlarm);
-      }
-      else {
-        wakeUpAlarm = adjustAlarm(86400, wakeUpAlarm);
-      }
+      sleepAlarm = adjustAlarm(86400, sleepAlarm);
+    }
+
+    // Snooze wake up alarm 5 minutes
+    else if (Data[0] == 7) {
+      wakeUpAlarm = adjustAlarm(300, wakeUpAlarm);
+    }
+    
+    // Stop sounding wake up alarm, automatically sets to same time next day
+    else if (Data[0] == 8) {
+      wakeUpAlarm = adjustAlarm(86400, wakeUpAlarm);
     }
   
 //    Serial.println("time: ");
@@ -293,13 +291,13 @@ void loop() {
       digitalWrite(LED, HIGH);
       curNote = 0;
       playMusic = 1;
-      sleepPlaying = 1;
       Bluetooth.println(1);
       //Bluetooth.println("Sleep");
     }
     // If room is dark and phone is on pressure pad, set sleep alarm to same time the next day
     else {
       sleepAlarm = adjustAlarm(86400, sleepAlarm);
+      Bluetooth.println(2);
     }
   }
   // Check if it is past wake up alarm time
@@ -307,7 +305,6 @@ void loop() {
     digitalWrite(LED, HIGH);
     curNote = 0;
     playMusic = 1;
-    wakeUpPlaying = 1;
     Bluetooth.println(0);
   }
   // If not yet time for alarm, don't do anything
@@ -315,8 +312,6 @@ void loop() {
     digitalWrite(LED,  LOW);
     curNote = 0;
     playMusic = 0;
-    sleepPlaying = 0;
-    wakeUpPlaying = 0;
   }
 
   while ((curNote < noteCount) && (playMusic)) {
@@ -329,15 +324,6 @@ void loop() {
     curNote += 1;
     readBluetooth(); // Check if interrupt was received to stop playing current song
     updateLCD();
-
-    // Send message to Android device which alarm is playing
-    // Handled on Android device by displaying snooze and stop alarm buttons
-//    if (wakeUpPlaying) {
-//      Bluetooth.println(0);
-//    }
-//    else {
-//      Bluetooth.println(1);
-//    }
   }
 
   updateLCD();
