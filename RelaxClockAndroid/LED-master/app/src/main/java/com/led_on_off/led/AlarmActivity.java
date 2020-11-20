@@ -42,6 +42,7 @@ public class AlarmActivity extends ActionBarActivity{
         }
         Button snooze = (Button)findViewById(R.id.snooze);
         Button stop = (Button)findViewById(R.id.stop);
+        Button mySleep =(Button)findViewById(R.id.placing);
         snooze.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,6 +54,14 @@ public class AlarmActivity extends ActionBarActivity{
             @Override
             public void onClick(View view) {
                 decision = 1;
+
+                goToMain(decision);
+            }
+        });
+        mySleep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                decision = 2;
 
                 goToMain(decision);
             }

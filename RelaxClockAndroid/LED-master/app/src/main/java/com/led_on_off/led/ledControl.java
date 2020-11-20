@@ -181,19 +181,53 @@ public class ledControl extends ActionBarActivity {
         int decision = intent.getIntExtra("Decision",-1);
         int resultCode1 = intent.getIntExtra("ResultCode", -1);
         if(decision ==0){
-            setSnooze();
+            if(resultCode1==0){
+                setSnoozeSleep();
+            }
+            else if (resultCode1 == 1){
+                setSnoozeWake();
+            }
         }
         if(decision==1){
-            setStop();
             if (resultCode1 == 0) {
+                setStopSleep();
                 msg("Failure to sleep will result in death.");
                 Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.healthline.com/health/sleep-deprivation/effects-on-body#Causes-of-sleep-deprivation"));
                 startActivity(browserIntent);
             }
+            else if (resultCode1 ==1){
+                setStopSleep();
+            }
         }
 
     }
-    private void setSnooze(){
+    private void setSnoozeWake(){
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("7".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+    }
+    private void setStopWake(){
+        if (btSocket!=null)
+        {
+            try
+            {
+                btSocket.getOutputStream().write("8".toString().getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+    }
+    private void setSnoozeSleep(){
         if (btSocket!=null)
         {
             try
@@ -206,7 +240,7 @@ public class ledControl extends ActionBarActivity {
             }
         }
     }
-    private void setStop(){
+    private void setStopSleep(){
         if (btSocket!=null)
         {
             try
