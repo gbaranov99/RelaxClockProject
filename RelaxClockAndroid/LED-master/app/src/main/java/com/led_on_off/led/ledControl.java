@@ -13,9 +13,12 @@ import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.ProgressDialog;
@@ -24,6 +27,7 @@ import android.bluetooth.BluetoothDevice;
 import android.os.AsyncTask;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -33,6 +37,10 @@ public class ledControl extends ActionBarActivity {
     Button disableWake, disableSleep, Discnt;
     EditText setTime, setWake,setSleep;
     String address = null;
+    ListView wakeList, sleepList;
+    public ArrayAdapter arrayAdapter1;
+    public ArrayAdapter arrayAdapter2;
+
     private ProgressDialog progress;
     BluetoothAdapter myBluetooth = null;
     BluetoothSocket btSocket = null;
@@ -40,7 +48,11 @@ public class ledControl extends ActionBarActivity {
     //SPP UUID. Look for it
     static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     final int MY_REQUEST_CODE = 42;
-
+    String[] themes = {
+            "Pirates of the Caribbean",
+            "Star Wars",
+            "Game of Thrones"
+    };
     // Create the Handler object (on the main thread by default)
     Handler handler = new Handler();
     // Define the code block to be executed
@@ -109,7 +121,12 @@ public class ledControl extends ActionBarActivity {
 
         handler.post(runnableCode);
         //call the widgets
-
+        wakeList = (ListView)findViewById(R.id.wakeList);
+        sleepList = (ListView)findViewById(R.id.sleepList);
+        arrayAdapter1 = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,themes);
+        arrayAdapter2 = new ArrayAdapter(getApplicationContext(),android.R.layout.simple_list_item_1,themes);
+        wakeList.setAdapter(arrayAdapter1);
+        sleepList.setAdapter(arrayAdapter2);
         Discnt = (Button)findViewById(R.id.dis_btn);
         setTime = (EditText)findViewById(R.id.setTime);
         setWake = (EditText)findViewById(R.id.setWakeAlarm);
@@ -159,6 +176,39 @@ public class ledControl extends ActionBarActivity {
             }
         });
 
+        sleepList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0:{setTheme("1","0");
+                            break;
+                    }
+                    case 1:{setTheme("1","1");
+                        break;
+                    }
+                    case 2:{setTheme("1","2");
+                        break;
+                    }
+                }
+            }
+        });
+        wakeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 0:{setTheme("0","0");
+                        break;
+                    }
+                    case 1:{setTheme("0","1");
+                        break;
+                    }
+                    case 2:{setTheme("0","2");
+                        break;
+                    }
+                }
+            }
+        });
+
         new ConnectBT().execute(); //Call the class to connect
 
 
@@ -201,6 +251,22 @@ public class ledControl extends ActionBarActivity {
         }
 
     }
+    private void setTheme(String alarmType, String theme){
+        String myString = "9; "+alarmType+" "+theme;
+        if (btSocket!=null)
+
+        {
+            try
+            {
+                btSocket.getOutputStream().write(myString.getBytes());
+            }
+            catch (IOException e)
+            {
+                msg("Error");
+            }
+        }
+    }
+
     private void setSnoozeWake(){
         if (btSocket!=null)
         {
