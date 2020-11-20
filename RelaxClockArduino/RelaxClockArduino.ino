@@ -40,10 +40,18 @@ int durations1[] = {
 // Declare variables used to play music
 int playMusic = 0; // Boolean used to determine if music should be playing
 int curNote = 0;   // Current note being played
-// Set Pirates of the Carribean as the default song
-int noteCount = noteCount1;
-int *melody = melody1;
-int *noteDurations = durations1;
+
+int wakeUpPlaying = 0;
+int sleepPlaying = 0;
+
+// Set Pirates of the Carribean as the default song for both sleep and wake up alarms
+int sleepNoteCount = noteCount1;
+int *sleepMelody = melody1;
+int *sleepNoteDurations = durations1;
+
+int wakeUpNoteCount = noteCount1;
+int *wakeUpMelody = melody1;
+int *wakeUpNoteDurations = durations1;
 
 
 // Declare alarm variables
@@ -147,6 +155,46 @@ void readBluetooth() {
     else if (Data[0] == 8) {
       wakeUpAlarm = adjustAlarm(86400, wakeUpAlarm);
     }
+
+    // Set alarm sound from one of three presets
+    else if (Data[0] == 9) {
+      // Set wake up alarm song
+      if (Data[3] == 0) {
+        if (Data[5] = 0) {
+          int wakeUpNoteCount = noteCount1;
+          int *wakeUpMelody = melody1;
+          int *wakeUpNoteDurations = durations1;
+        }
+        else if (Data[5] = 1) {
+          int wakeUpNoteCount = noteCount2;
+          int *wakeUpMelody = melody2;
+          int *wakeUpNoteDurations = durations2;
+        }
+        else if (Data[5] = 0) {
+          int wakeUpNoteCount = noteCount3;
+          int *wakeUpMelody = melody3;
+          int *wakeUpNoteDurations = durations3;
+        }
+      }
+      // Set sleep alarm song
+      else {
+        if (Data[5] = 0) {
+          int sleepNoteCount = noteCount1;
+          int *sleepMelody = melody1;
+          int *sleepNoteDurations = durations1;
+        }
+        else if (Data[5] = 1) {
+          int sleepNoteCount = noteCount2;
+          int *sleepMelody = melody2;
+          int *sleepNoteDurations = durations2;
+        }
+        else if (Data[5] = 0) {
+          int sleepNoteCount = noteCount3;
+          int *sleepMelody = melody3;
+          int *sleepNoteDurations = durations3;
+        }
+      }
+    }
   
 //    Serial.println("time: ");
 //    Serial.println(now());
@@ -233,7 +281,8 @@ time_t adjustAlarm(unsigned long adjustment, time_t alarm) {
   adjustTime(adjustment);
   alarm = now();
   setTime(tmp);
-  playMusic = 0;
+  sleepPlaying = 0;
+  wakeUpPlaying = 0;
   return alarm;
 }
 
@@ -290,7 +339,7 @@ void loop() {
       // TODO: Possibly set pressData to be calibrated based on how much user's phone weighs
       digitalWrite(LED, HIGH);
       curNote = 0;
-      playMusic = 1;
+      sleepPlaying = 1;
       Bluetooth.println(1);
       //Bluetooth.println("Sleep");
     }
@@ -304,17 +353,30 @@ void loop() {
   else if (wakeUpAlarm != 0 && wakeUpAlarm < now()) {
     digitalWrite(LED, HIGH);
     curNote = 0;
-    playMusic = 1;
+    wakeUpPlaying = 1;
     Bluetooth.println(0);
   }
   // If not yet time for alarm, don't do anything
   else {
     digitalWrite(LED,  LOW);
     curNote = 0;
-    playMusic = 0;
+    sleepPlaying = 0;
+    wakeUpPlaying = 0;
   }
 
-  while ((curNote < noteCount) && (playMusic)) {
+  while ((curNote < wakeUpNoteCount) && (wakeUpPlaying)) {
+    // Serial.println(playMusic);
+    int noteDuration = 1000 / sleepNoteDurations[curNote];
+    int pauseBetweenNotes = noteDuration * 1.30;
+    tone(buzzer, sleepMelody[curNote], noteDuration);
+    delay(pauseBetweenNotes);
+    noTone(buzzer);
+    curNote += 1;
+    readBluetooth(); // Check if interrupt was received to stop playing current song
+    updateLCD();
+  }
+
+  while ((curNote < sleepNoteCount) && (sleepPlaying)) {
     // Serial.println(playMusic);
     int noteDuration = 1000 / noteDurations[curNote];
     int pauseBetweenNotes = noteDuration * 1.30;
