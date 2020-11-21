@@ -26,18 +26,18 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class AlarmActivity extends ActionBarActivity{
-    int decision, resultCode;
+    int decision, resultCode1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.alarm_activity);
         Intent myIntent = getIntent();
-        resultCode = myIntent.getIntExtra("CODE",-1);
+        resultCode1 = myIntent.getIntExtra("CODE",-1);
         TextView title = (TextView)findViewById(R.id.title);
-        if(resultCode ==0){
+        if(resultCode1 ==0){
             title.setText("Sleep Alarm Options");
         }
-        if(resultCode ==1){
+        if(resultCode1 ==1){
             title.setText("Wake Alarm Options");
         }
         Button snooze = (Button)findViewById(R.id.snooze);
@@ -70,7 +70,7 @@ public class AlarmActivity extends ActionBarActivity{
     void goToMain(int code){
         Intent i = new Intent(this, ledControl.class);
         i.putExtra("Decision",code);
-        i.putExtra("ResultCode", resultCode);
+        i.putExtra("ResultCode", resultCode1);
         setResult(RESULT_OK, i);
         finish();
     }

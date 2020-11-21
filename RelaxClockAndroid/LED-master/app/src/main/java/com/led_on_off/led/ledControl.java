@@ -94,6 +94,7 @@ public class ledControl extends ActionBarActivity {
         if(actualStatus == 0){
             Log.d("Handlers", "gud");
             Log.d("Handlers", "Called in wake");
+            msg("hey fuckboi, go to sleep dinghead");
             Intent intent = new Intent(ledControl.this,AlarmActivity.class);
             intent.putExtra("CODE",1);
             startActivityForResult(intent,MY_REQUEST_CODE);
@@ -102,6 +103,7 @@ public class ledControl extends ActionBarActivity {
         if(actualStatus == 1){
             Log.d("Handlers", "bad");
             Log.d("Handlers", "Called in sleep");
+            msg("hey fuckboi, go to sleep dinghead");
             Intent intent = new Intent(ledControl.this,AlarmActivity.class);
             intent.putExtra("CODE",0);
             startActivityForResult(intent,MY_REQUEST_CODE);
@@ -230,6 +232,8 @@ public class ledControl extends ActionBarActivity {
     protected void onActivityResult(int requestCode, final int resultCode, Intent intent) {
         int decision = intent.getIntExtra("Decision",-1);
         int resultCode1 = intent.getIntExtra("ResultCode", -1);
+        Log.d("Handlerz", Integer.toString(resultCode1));
+        Log.d("Handlerzzz", Integer.toString(decision));
         if(decision ==0){
             if(resultCode1==0){
                 setSnoozeSleep();
@@ -246,13 +250,13 @@ public class ledControl extends ActionBarActivity {
                 startActivity(browserIntent);
             }
             else if (resultCode1 ==1){
-                setStopSleep();
+                setStopWake();
             }
         }
 
     }
     private void setTheme(String alarmType, String theme){
-        String myString = "9; "+alarmType+" "+theme;
+        String myString = "9: "+alarmType+" "+theme;
         if (btSocket!=null)
 
         {

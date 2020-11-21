@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/dis_btn"
-        android:layout_marginTop="-500dp"
+        android:layout_marginTop="-530dp"
         android:text="Welcome to Relax Clock!"
         android:textSize="25sp" />
 
@@ -51,7 +51,7 @@
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Set WakeUpAlarm"
+                android:text="Set Wake Up Alarm"
                 android:textSize="18sp" />
 
             <EditText
@@ -65,13 +65,15 @@
                 android:id="@+id/disableWake"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Disable WakeUpAlarm" />
+                android:text="Disable Wake Up Alarm" />
 
             <TextView
                 android:id="@+id/textView8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Set Theme for WakeUp" />
+                android:text="Set Theme for WakeUp"
+                android:layout_marginTop="30dp"
+                />
 
             <ListView
                 android:id="@+id/wakeList"
@@ -103,12 +105,13 @@
                 android:id="@+id/disableSleep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Disable SleepAlarm" />
+                android:text="Disable Sleep Alarm" />
 
             <TextView
                 android:id="@+id/textView9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="Set Theme for Sleep" />
 
             <ListView
@@ -120,12 +123,13 @@
 
 
     <Button
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="500dp"
         android:id="@+id/dis_btn"
-        android:textSize="20sp"
-        android:text="DISCONNECT" />-
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="540dp"
+        android:background="#B70808"
+        android:text="DISCONNECT"
+        android:textSize="20sp" />-
 
 
 </RelativeLayout>
