@@ -193,6 +193,7 @@ void readBluetooth() {
           wakeUpDurations = durations2;
         }
         else if (Data[5] == 2) {
+          Serial.println("games of thrones");
           wakeUpNoteCount = noteCount3;
           wakeUpMelody = melody3;
           wakeUpDurations = durations3;
