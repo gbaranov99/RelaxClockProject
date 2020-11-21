@@ -94,7 +94,7 @@ public class ledControl extends ActionBarActivity {
         if(actualStatus == 0){
             Log.d("Handlers", "gud");
             Log.d("Handlers", "Called in wake");
-            msg("hey fuckboi, go to sleep dinghead");
+            msg("hey, wakeup dinghead");
             Intent intent = new Intent(ledControl.this,AlarmActivity.class);
             intent.putExtra("CODE",1);
             startActivityForResult(intent,MY_REQUEST_CODE);
@@ -103,7 +103,7 @@ public class ledControl extends ActionBarActivity {
         if(actualStatus == 1){
             Log.d("Handlers", "bad");
             Log.d("Handlers", "Called in sleep");
-            msg("hey fuckboi, go to sleep dinghead");
+            msg("hey, go to sleep dinghead");
             Intent intent = new Intent(ledControl.this,AlarmActivity.class);
             intent.putExtra("CODE",0);
             startActivityForResult(intent,MY_REQUEST_CODE);
