@@ -66,6 +66,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Disable WakeUpAlarm" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Theme for WakeUp" />
+
+            <ListView
+                android:id="@+id/wakeList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
         <LinearLayout
@@ -93,6 +104,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Disable SleepAlarm" />
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Theme for Sleep" />
+
+            <ListView
+                android:id="@+id/sleepList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
 
