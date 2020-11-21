@@ -37,14 +37,22 @@ int durations1[] = {
   8, 8, 4, 4, 4, 8, 4, 4,   8, 8, 4, 4, 8, 8, 4, 4
 };
 
+int noteCount3 = 32;
+int melody3[] = {
+  G4, C4, DS4, F4, G4, C4, DS4, F4,G4, C4, DS4, F4, G4, C4, DS4, F4,G4, C4, E4, F4, G4, C4, E4, F4,G4, C4, E4, F4, G4, C4, E4, F4
+};
+
+int durations3[] = {
+  4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8
+};
 
 int noteCount2 = noteCount1;
 int *melody2 = melody1;
 int *durations2 = durations1;
 
-int noteCount3 = noteCount1;
-int *melody3 = melody1;
-int *durations3 = durations1;
+//int noteCount3 = noteCount1;
+//int *melody3 = melody1;
+//int *durations3 = durations1;
 
 // Declare variables used to play music
 int curNote = 0;   // Current note being played
@@ -175,37 +183,37 @@ void readBluetooth() {
       // Set wake up alarm song
       if (Data[3] == 0) {
         if (Data[5] == 0) {
-          int wakeUpNoteCount = noteCount1;
-          int *wakeUpMelody = melody1;
-          int *wakeUpDurations = durations1;
+          wakeUpNoteCount = noteCount1;
+          wakeUpMelody = melody1;
+          wakeUpDurations = durations1;
         }
         else if (Data[5] == 1) {
-          int wakeUpNoteCount = noteCount2;
-          int *wakeUpMelody = melody2;
-          int *wakeUpDurations = durations2;
+          wakeUpNoteCount = noteCount2;
+          wakeUpMelody = melody2;
+          wakeUpDurations = durations2;
         }
         else if (Data[5] == 2) {
-          int wakeUpNoteCount = noteCount3;
-          int *wakeUpMelody = melody3;
-          int *wakeUpDurations = durations3;
+          wakeUpNoteCount = noteCount3;
+          wakeUpMelody = melody3;
+          wakeUpDurations = durations3;
         }
       }
       // Set sleep alarm song
       else {
         if (Data[5] == 0) {
-          int sleepNoteCount = noteCount1;
-          int *sleepMelody = melody1;
-          int *sleepDurations = durations1;
+          sleepNoteCount = noteCount1;
+          sleepMelody = melody1;
+          sleepDurations = durations1;
         }
         else if (Data[5] == 1) {
-          int sleepNoteCount = noteCount2;  
-          int *sleepMelody = melody2;
-          int *sleepDurations = durations2;
+          sleepNoteCount = noteCount2;  
+          sleepMelody = melody2;
+          sleepDurations = durations2;
         }
         else if (Data[5] == 2) {
-          int sleepNoteCount = noteCount3;
-          int *sleepMelody = melody3;
-          int *sleepDurations = durations3;
+          sleepNoteCount = noteCount3;
+          sleepMelody = melody3;
+          sleepDurations = durations3;
         }
       }
     }
