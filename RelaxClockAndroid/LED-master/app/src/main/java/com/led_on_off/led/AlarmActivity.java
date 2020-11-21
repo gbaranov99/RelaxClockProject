@@ -34,15 +34,18 @@ public class AlarmActivity extends ActionBarActivity{
         Intent myIntent = getIntent();
         resultCode1 = myIntent.getIntExtra("CODE",-1);
         TextView title = (TextView)findViewById(R.id.title);
-        if(resultCode1 ==0){
-            title.setText("Sleep Alarm Options");
-        }
-        if(resultCode1 ==1){
-            title.setText("Wake Alarm Options");
-        }
         Button snooze = (Button)findViewById(R.id.snooze);
         Button stop = (Button)findViewById(R.id.stop);
         Button mySleep =(Button)findViewById(R.id.placing);
+        if(resultCode1 ==0){
+            title.setText("Sleep Alarm Options");
+            mySleep.setVisibility(View.VISIBLE);
+        }
+        if(resultCode1 ==1){
+            title.setText("Wake Alarm Options");
+            mySleep.setVisibility(View.GONE);
+        }
+
         snooze.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
