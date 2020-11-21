@@ -108,6 +108,11 @@ public class ledControl extends ActionBarActivity {
             intent.putExtra("CODE",0);
             startActivityForResult(intent,MY_REQUEST_CODE);
         }
+        if(actualStatus == 2){
+            Intent local = new Intent();
+            local.setAction("com.destroy.action");
+            sendBroadcast(local);
+        }
     }
 
     @Override

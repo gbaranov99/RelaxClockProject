@@ -1,4 +1,7 @@
 package com.led_on_off.led;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -37,6 +40,20 @@ public class AlarmActivity extends ActionBarActivity{
         Button snooze = (Button)findViewById(R.id.snooze);
         Button stop = (Button)findViewById(R.id.stop);
         Button mySleep =(Button)findViewById(R.id.placing);
+
+        IntentFilter filter = new IntentFilter();
+
+        filter.addAction("com.destroy.action");
+        BroadcastReceiver receiver = new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                finish();
+
+            }
+        };
+        registerReceiver(receiver, filter);
+
         if(resultCode1 ==0){
             title.setText("Sleep Alarm Options");
             mySleep.setVisibility(View.VISIBLE);
