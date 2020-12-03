@@ -1,4 +1,5 @@
-// Greg Baranov and Shawn John
+// Relax Clock .ino Code
+// By Greg Baranov and Shawn John
 
 // Sources and tutorial on how to play music with piezoelectric speaker:
 // https://create.arduino.cc/projecthub/nathan_ramanathan/play-polyphonic-tones-40e51b
@@ -37,22 +38,47 @@ int durations1[] = {
   8, 8, 4, 4, 4, 8, 4, 4,   8, 8, 4, 4, 8, 8, 4, 4
 };
 
-int noteCount3 = 32;
+// Declare notes and note durations for second included song: Imperial March from Star Wars
+int noteCount2 = 70;
+int melody2[] = {
+  A4, A4, A4, F4, C5, A4, F4, C5, A4, E5, E5, E5, F5, C5, GS4, F4, C5, A4,
+  A5, A4, A4, A5, GS5, G5, FS5, F5, FS5, 0, 
+  AS4, DS5, D5, CS5, C5, B4, C5, 0, F4, GS4, F4, GS4, C5, A4, C5, E5,
+  A5, A4, A4, A5, GS5, G5, FS5, F5, FS5, 0, 
+  AS4, DS5, D5, CS5, C5, B4, C5, 0, F4, GS4, F4, GS4, C5, A4, C5, E5
+};
+int durations2[] = {
+  2, 2, 2, -4, 8, 2, -4, 8, 1,
+  2, 2, 2, -4, 8, 2, -4, 8, 1,
+  2, -4, 8, 2, -4, 8, 8, 8, 4, 4, 4, 2, -4, 8,
+  8, 8, 8, 4, 4, 2, -4, 8, 2, -4, 8, 1,
+  2, -4, 8, 2, -4, 8, 8, 8, 4, 4, 4, 2, -4, 8,
+  8, 8, 8, 4, 4, 2, -4, 8, 2, -4, 8, 1
+};
+
+
+// Declare notes and note durations for third included song: Game of Thrones Main Title
+int noteCount3 = 106;
 int melody3[] = {
-  G4, C4, DS4, F4, G4, C4, DS4, F4,G4, C4, DS4, F4, G4, C4, DS4, F4,G4, C4, E4, F4, G4, C4, E4, F4,G4, C4, E4, F4, G4, C4, E4, F4
+  G4, C4, DS4, F4, G4, C4, DS4, F4,G4, C4, DS4, F4, G4, C4, DS4, F4,G4, C4, E4, F4, G4, C4, E4, F4,G4, C4, E4, F4, G4, C4, E4, F4,
+  G4, C4, DS4, F4, G4, C4, DS4, F4, D4, 0, F4, AS3, DS4, D4, F4, AS3,DS4, D4, C4, 0,
+  G4, C4, DS4, F4, G4, C4, DS4, F4, D4, 0, F4, AS3, DS4, D4, F4, AS3,DS4, D4, C4, 0,
+  G4, C4, DS4, F4, G4, C4, DS4, F4, D4, 0, F4, AS3, D4, DS4, D4, AS3 , C4, 0,
+  
+  C5, AS4, C4, G4, DS4, DS4, F4, G4, 0,
+  C5, AS4, C4, G4, DS4, DS4, D4,
+  
 };
 
 int durations3[] = {
-  4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8
+  4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,4,4,8,8,
+  2,2,8,8,2,2,8,8,1, 1,2,2,8,8,2,2,8,8,1,1,
+  2,2,8,8,2,2,8,8,1, 1,2,2,8,8,2,2,8,8,1,1,
+  2,2,8,8,2,2,8,8,1, 1,2,2,2,4,2,4, 1,1,
+
+  1, 1, 1, 1, 1, 2, 2, 1, 1, 
+  1, 1, 1, 1, 1, 2, 2, 
 };
-
-int noteCount2 = noteCount1;
-int *melody2 = melody1;
-int *durations2 = durations1;
-
-//int noteCount3 = noteCount1;
-//int *melody3 = melody1;
-//int *durations3 = durations1;
 
 // Declare variables used to play music
 int curNote = 0;   // Current note being played
@@ -111,6 +137,7 @@ void readBluetooth() {
       }
     }
 
+    // Get time data from bluetooth input
     int hours = Data[3] * 10 + Data[4];
     int minutes = Data[6] * 10 + Data[7];
     int seconds = Data[9] * 10 + Data[10];
@@ -182,6 +209,7 @@ void readBluetooth() {
     else if (Data[0] == 9) {
       // Set wake up alarm song
       if (Data[3] == 0) {
+        // 0 = Pirates of the Carribean, 1 = Imperial March, 2 = Game of Thrones Main Theme
         if (Data[5] == 0) {
           wakeUpNoteCount = noteCount1;
           wakeUpMelody = melody1;
@@ -193,7 +221,6 @@ void readBluetooth() {
           wakeUpDurations = durations2;
         }
         else if (Data[5] == 2) {
-          Serial.println("games of thrones");
           wakeUpNoteCount = noteCount3;
           wakeUpMelody = melody3;
           wakeUpDurations = durations3;
@@ -202,6 +229,7 @@ void readBluetooth() {
       // Set sleep alarm song
       else {
         if (Data[5] == 0) {
+          // 0 = Pirates of the Carribean, 1 = Imperial March, 2 = Game of Thrones Main Theme
           sleepNoteCount = noteCount1;
           sleepMelody = melody1;
           sleepDurations = durations1;
@@ -218,16 +246,12 @@ void readBluetooth() {
         }
       }
     }
-  
-//    Serial.println("time: ");
-//    Serial.println(now());
-//    Serial.print("alarm: ");
-//    Serial.println(sleepAlarm);
   }
   Data = "";
 }
 
-// Simple function to p
+// Simple function to pad a number with a leading 0 if it is a single digit
+// Prints 01 to LCD if input is 1, and prints 31 if input is 31
 void leadingZero(int number) {
   if (number / 10 == 0) {
     lcd.print("0");
@@ -238,6 +262,7 @@ void leadingZero(int number) {
   }
 }
 
+// Updates LCD with current time and alarm information
 void updateLCD() {
   if (second() != prevSecond) {
     // Display time info
@@ -252,6 +277,7 @@ void updateLCD() {
     lcd.setCursor(0,1);
 
     int showSleep;
+    
     // Display alarm info
     // If no alarms are set, display "None :)"
     if (!sleepAlarm && !wakeUpAlarm) {
@@ -276,6 +302,8 @@ void updateLCD() {
     else {
       showSleep = 0;
     }
+
+    // Prints sleep or wake up alarm to LCD depending on above logic
     // Print sleep alarm info if sleep alarm is sooner
     if (showSleep) {
       lcd.print("SAlarm: ");
@@ -298,6 +326,7 @@ void updateLCD() {
   }
 }
 
+// Adjust alarm time using now(), adjustTime() and setTime() functions from Time library
 time_t adjustAlarm(unsigned long adjustment, time_t alarm) {
   time_t tmp = now();
   setTime(alarm);
@@ -309,13 +338,14 @@ time_t adjustAlarm(unsigned long adjustment, time_t alarm) {
   return alarm;
 }
 
+// Setup function that initializes functioning of arduino
 void setup() {
+  // Start LCD display, Bluetooth and serial monitor
   Bluetooth.begin(9600);
-  Serial.begin(9600);
-  lcd.begin(16, 2); // Start LCD display and serial monitor
-  
-  Serial.println("Waiting for command...");
-  // Bluetooth.println("Send 1 to turn on the LED. Send 0 to turn Off");
+  Serial.begin(9600); 
+  lcd.begin(16, 2);
+
+  // Initialize pins 
   pinMode(LED,OUTPUT);
   pinMode(3, INPUT);
   pinMode(4, OUTPUT);
@@ -323,8 +353,11 @@ void setup() {
   pinMode(pressSens, INPUT);
   pinMode(buzzer, OUTPUT);
 
-  analogWrite(6, 90); // Hardcode brightness of LCD, as potentiometer component was inconsistent
+  // Hardcode brightness of LCD, as potentiometer component proved inconsistent
+  analogWrite(6, 90); 
 
+  // Set starting time to start of 2020
+  // Date doesn't matter, as our alarms only concern themselves with the time of day
   setTime(0,0,0,1,1,2020);
   
   // Show starting messages
@@ -333,38 +366,25 @@ void setup() {
   lcd.setCursor(0,1);
   lcd.print("Alarm:   None :)");
 }
- 
+
+// Main arduino loop that runs our program
 void loop() {
-  // Because our alarms only care about time of day, not number of days since alarm started running, we do (milliseconds running) % (milliseconds in a day)
-  // startTime lets us set the current time of the 
-  // Allows us to only use millis() for time keeping, as we do not need the advanced functionality of the Time library
-  
+
+  // Every time loop() runs, check if there was any bluetooth input with the readBluetooth() function
   readBluetooth();
-//  Serial.println(Data);
-  
+
+  // Get data from analog Light Sensor and Pressure Sensor
   lightData = analogRead(lightSens);
   pressData = analogRead(pressSens);
-//  Serial.print("Light Sensor reading: ");
-//  Serial.println(lightData);
-//  Serial.print("Pressure Sensor reading: ");
-//  Serial.println(pressData);
-
-//  Serial.print("time: ");
-//  Serial.println(now());
-//  Serial.print("alarm: ");
-//  Serial.println(sleepAlarm);
 
   // Check if phone is on pressure pad and lights are off if it is past sleep alarm time
   if (sleepAlarm != 0 && sleepAlarm < now()) {
     // If the room is lit or phone is not on the pressure pad, sound sleep alarm and send notifications to user's phone
     if (lightData > 500 || pressData < 200) {
-      // TODO: Send notifications to user's phone
-      // TODO: Possibly set pressData to be calibrated based on how much user's phone weighs
       digitalWrite(LED, HIGH);
       curNote = 0;
       sleepPlaying = 1;
       Bluetooth.println(1);
-      //Bluetooth.println("Sleep");
     }
     // If room is dark and phone is on pressure pad, set sleep alarm to same time the next day
     else {
@@ -373,14 +393,14 @@ void loop() {
       Bluetooth.println(2);
     }
   }
-  // Check if it is past wake up alarm time
+  // Play wake up alarm if it is past that alarm's time
   else if (wakeUpAlarm != 0 && wakeUpAlarm < now()) {
     digitalWrite(LED, HIGH);
     curNote = 0;
     wakeUpPlaying = 1;
     Bluetooth.println(0);
   }
-  // If not yet time for alarm, don't do anything
+  // If not yet time for either alarm, don't do anything
   else {
     digitalWrite(LED,  LOW);
     curNote = 0;
@@ -388,30 +408,56 @@ void loop() {
     wakeUpPlaying = 0;
   }
 
+  // If it is time for wake up alarm to play, play the notes for the alarm within this loop
+  // Much of this loop's logic is adapted from the github and tutorial at the start of this .ino file
   while ((curNote < wakeUpNoteCount) && (wakeUpPlaying)) {
-    // Serial.println(playMusic);
-    int noteDuration = 1000 / wakeUpDurations[curNote];
-    int pauseBetweenNotes = noteDuration * 1.30;
+    int noteDuration;       // How long the note should play for
+    int pauseBetweenNotes;  // How long a pause between notes should be, to make sure notes don't blend together
+
+    // If the duration in wakeUpDurations is > 0, it is a regular note
+    if (wakeUpDurations[curNote] > 0) {
+      noteDuration = 1000 / wakeUpDurations[curNote];
+      pauseBetweenNotes = noteDuration * 1.30;
+    }
+    // If the duration is < 0, it is a dotted note, and should be played for 1.5 time the note's specified duration
+    // Allows for more detailed and accurate music to be played
+    else {
+      noteDuration = 1000 / abs(wakeUpDurations[curNote]);
+      noteDuration *= 1.5;
+      pauseBetweenNotes = noteDuration * 1.30;
+    }
+    // Play the the current note in the melody for the specified duration
     tone(buzzer, wakeUpMelody[curNote], noteDuration);
     delay(pauseBetweenNotes);
     noTone(buzzer);
-    curNote += 1;
+    curNote += 1;    // Move on to the next note in the arrays to play
     readBluetooth(); // Check if interrupt was received to stop playing current song
     updateLCD();
   }
 
+  // Plays sleep alarm if it is time for the alarm to play
+  // Functions identically to above wake up alarm except with sleep alarm variables
   while ((curNote < sleepNoteCount) && (sleepPlaying)) {
-    // Serial.println(playMusic);
-    int noteDuration = 1000 / sleepDurations[curNote];
-    int pauseBetweenNotes = noteDuration * 1.30;
+    int noteDuration;
+    int pauseBetweenNotes;
+    if (sleepDurations[curNote] > 0) {
+      noteDuration = 1000 / sleepDurations[curNote];
+      pauseBetweenNotes = noteDuration * 1.30;
+    }
+    else {
+      noteDuration = 1000 / abs(sleepDurations[curNote]);
+      noteDuration *= 1.5;
+      pauseBetweenNotes = noteDuration * 1.30;
+    }
     tone(buzzer, sleepMelody[curNote], noteDuration);
     delay(pauseBetweenNotes);
     noTone(buzzer);
     curNote += 1;
-    readBluetooth(); // Check if interrupt was received to stop playing current song
+    readBluetooth();
     updateLCD();
   }
 
+  // Update LCD and go on to next loop() call
   updateLCD();
   delay(200);
 }

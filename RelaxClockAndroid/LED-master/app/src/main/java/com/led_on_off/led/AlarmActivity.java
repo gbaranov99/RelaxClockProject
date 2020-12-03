@@ -30,6 +30,7 @@ import java.util.UUID;
 
 public class AlarmActivity extends ActionBarActivity{
     int decision, resultCode1;
+    BroadcastReceiver receiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,16 +40,15 @@ public class AlarmActivity extends ActionBarActivity{
         TextView title = (TextView)findViewById(R.id.title);
         Button snooze = (Button)findViewById(R.id.snooze);
         Button stop = (Button)findViewById(R.id.stop);
-        Button mySleep =(Button)findViewById(R.id.placing);
 
         IntentFilter filter = new IntentFilter();
 
         filter.addAction("com.destroy.action");
-        BroadcastReceiver receiver = new BroadcastReceiver() {
+        receiver = new BroadcastReceiver() {
 
             @Override
             public void onReceive(Context context, Intent intent) {
-                finish();
+                goToMain(2);
 
             }
         };
@@ -56,11 +56,9 @@ public class AlarmActivity extends ActionBarActivity{
 
         if(resultCode1 ==0){
             title.setText("Sleep Alarm Options");
-            mySleep.setVisibility(View.VISIBLE);
         }
         if(resultCode1 ==1){
             title.setText("Wake Alarm Options");
-            mySleep.setVisibility(View.GONE);
         }
 
         snooze.setOnClickListener(new View.OnClickListener() {
@@ -78,14 +76,7 @@ public class AlarmActivity extends ActionBarActivity{
                 goToMain(decision);
             }
         });
-        mySleep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                decision = 2;
 
-                goToMain(decision);
-            }
-        });
     }
     void goToMain(int code){
         Intent i = new Intent(this, ledControl.class);
@@ -98,5 +89,11 @@ public class AlarmActivity extends ActionBarActivity{
     private void msg(String s)
     {
         Toast.makeText(getApplicationContext(),s,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver);
     }
 }
