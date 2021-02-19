@@ -31,43 +31,43 @@ The Relax Clock seeks to help people build better sleeping habits through extern
 
 ## Arduino Installation
 #### Arduino to HC-05 bluetooth module
-Digital pin 4   -> 1K ohm resistor 
-GND ->  2K ohm resistor -> 1K ohm resistor -> wire1 -> TX
-Digital pin 3      ———->      RX
-5V                ———->      VCC
-GND             ———->      GND
+- Digital pin 4   -> 1K ohm resistor 
+- GND ->  2K ohm resistor -> 1K ohm resistor -> wire1 -> TX
+- Digital pin 3      ———->      RX
+- 5V                ———->      VCC
+- GND             ———->      GND
  
 #### Arduino to LCD
-Digital pin 12 -> LCD RS
-Digital pin 11 -> LCD Enable
-Digital pin 10 -> LCD D4
-Digital pin 9 -> LCD D5
-Digital pin 8  -> LCD D6
-Digital pin 7 -> LCD D7
-Digital pin 6 -> LCD V0
-GND -> LCD R/w
-GND -> LCD VSS
-5V -> LCD VDD
-5V -> 220 ohm resistor -> LCD LED+
-GND -> LCD LED-
+- Digital pin 12 -> LCD RS
+- Digital pin 11 -> LCD Enable
+- Digital pin 10 -> LCD D4
+- Digital pin 9 -> LCD D5
+- Digital pin 8  -> LCD D6
+- Digital pin 7 -> LCD D7
+- Digital pin 6 -> LCD V0
+- GND -> LCD R/w
+- GND -> LCD VSS
+- 5V -> LCD VDD
+- 5V -> 220 ohm resistor -> LCD LED+
+- GND -> LCD LED-
  
 #### Arduino to pressure plate
-5v -> wire 1 -> 1st Pressure plate pin
-Analog pin 1 -> 220 ohm resistor -> 2nd Pressure plate pin
-GND -> 220 ohm resistor -> wire 2
+- 5v -> wire 1 -> 1st Pressure plate pin
+- Analog pin 1 -> 220 ohm resistor -> 2nd Pressure plate pin
+- GND -> 220 ohm resistor -> wire 2
  
 #### Arduino to photoresistor
-5v -> wire 1 -> 1st Photoresistor Pin
-Analog pin 0 -> 220 ohm resistor -> 2nd Photoresistor Pin
-GND -> 220 ohm resistor -> wire 2
+- 5v -> wire 1 -> 1st Photoresistor Pin
+- Analog pin 0 -> 220 ohm resistor -> 2nd Photoresistor Pin
+- GND -> 220 ohm resistor -> wire 2
  
 #### Arduino to speaker
-Digital pin 5 -> positive piezo speaker pin
-GND -> 220 ohm resistor -> negative piezo speaker pin
+- Digital pin 5 -> positive piezo speaker pin
+- GND -> 220 ohm resistor -> negative piezo speaker pin
  
 #### Arduino to LED
-Digital pin 13 -> long LED pin
-GND -> 220 ohm resistor -> short LED pin
+- Digital pin 13 -> long LED pin
+- GND -> 220 ohm resistor -> short LED pin
 
 ## App Installation
 Download the apk onto an Android phone with at least Android version 8.0 (Oreo). The location of the apk within the repository is:
